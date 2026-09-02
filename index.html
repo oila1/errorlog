@@ -284,6 +284,12 @@
     padding:10px 16px; border-radius:8px; font-size:13.5px; display:none; z-index:50;
   }
   .err-text{color:var(--red); font-size:13.5px; margin-top:10px;}
+  .no-mistake-notice{
+    background:var(--sage-dim); border:1px solid rgba(123,174,134,0.35); border-radius:8px;
+    padding:14px 16px;
+  }
+  .no-mistake-notice p{font-size:13.5px; line-height:1.6; margin:0 0 8px;}
+  .no-mistake-notice p:last-child{margin-bottom:0;}
   .katex{color:inherit; font-size:1.02em;}
   .math-preview{
     background:var(--surface-2); border:1px solid var(--border); border-radius:6px;
@@ -702,13 +708,18 @@ async function analyseCurrentPhoto(){
 
 Write ALL maths using LaTeX, wrapped in single dollar signs for inline rendering — e.g. $\\frac{1}{2}x + 3 = 7$, $x^2 - 4$, $\\frac{dy}{dx}$, $\\int f(x)\\,dx$, $\\sin^{-1}(x)$, $\\sqrt{3}$, $x \\leq 5$. Always use \\frac{}{} for fractions (never "1/2" as plain text), ^{} for powers, _{} for subscripts, and proper LaTeX commands for roots, trig, limits, vectors (\\vec{v} or \\mathbf{v}), etc. Never spell operations out in words (not "x squared", not "the derivative of"). Every field is a terse log entry, not an explanation — no filler words, no restating the question, no "the student".
 
+MULTI-PART QUESTIONS: VCE questions are very often split into labelled parts — (a), (b)(i), (b)(ii), etc — and the student may have photographed the whole question at once. Do not assume the first part, or any particular part, is the one that's wrong. Work through EVERY part shown, checking each one's working against what it actually required, and find the SPECIFIC part that contains a genuine mathematical error. If more than one part has an error, report on whichever is worth the most marks (or the earliest one if marks aren't given). State which part in "questionGist" itself, e.g. "Part (b)(ii): solve $...$ for $x$" — if the question has no labelled parts, just describe the question as normal with no part prefix.
+
+CHECK BEFORE YOU DIAGNOSE: it is common for a photographed page to contain parts that are all actually correct, or for the working shown to reach the right answer by valid reasoning. If, after carefully checking every part on the page, you cannot find an actual mathematical error anywhere in the working shown, do NOT invent one. Set "noMistakeFound" to true and use "mistakeDescription" to say plainly what you actually see (e.g. "All parts shown work out correctly — no error visible on this page").
+
 CORRECTNESS IS NON-NEGOTIABLE: every equation, identity, or expression you write must be mathematically true and must directly reference what is actually visible in THIS photo — the real numbers, the real expression, the real line of working. Never invent a generic-sounding "rule" or identity to make the advice sound sharper (e.g. never write something like $\\frac{x}{ax}=\\frac{1}{a}$ as if it were a general law — it isn't one). If you cannot see clearly enough to state a specific equation correctly, describe the check in plain words instead of fabricating notation, and lower "confidence" accordingly. A vague-but-true description beats a precise-but-wrong one.
 
 Respond with ONLY a JSON object, no markdown fences, no preamble, matching exactly this shape:
 {
-  "questionGist": "the question itself in LaTeX ($...$), as short as possible, under 12 words",
+  "noMistakeFound": true or false — true only if you checked every part shown and none contain an actual error,
+  "questionGist": "the question itself in LaTeX ($...$), as short as possible, under 12 words — prefix with the part label if the question has labelled parts",
   "topicGuess": "a short topic label (2-4 words, e.g. 'related rates', 'vector proof', 'binomial distribution') — only used if the student left the topic field blank, so make your best inference from the question",
-  "mistakeDescription": "the exact error in LaTeX ($...$), blunt and specific, under 15 words — e.g. 'dropped the $-$ sign expanding $(x-3)^2$' not a full sentence explaining it",
+  "mistakeDescription": "the exact error in LaTeX ($...$), blunt and specific, under 15 words — e.g. 'dropped the $-$ sign expanding $(x-3)^2$' not a full sentence explaining it. If noMistakeFound is true, describe what you actually see instead.",
   "errorCategory": "must be exactly one of: ${CATEGORIES.join(' | ')}",
   "rootCause": "the underlying habit, under 10 words, LaTeX ($...$) for any maths",
   "actionAdvice": "a broad EXAM-STRATEGY habit for this whole error CATEGORY — a physical action, not a maths rule. Must generalise to ANY question in this category regardless of topic, so it must NOT mention the specific numbers, formula, or topic from this photo (no naming the actual function, expression, or technique used here). Think in the style of: 'redo the full calculation on fresh space and compare', 'recompute using a second method', 'read the question twice before writing anything', 'list every given value before starting', 'say the final answer out loud and check it answers what was asked'. Costs seconds mid-question or a couple of minutes in leftover time. Under 15 words, plain words, no LaTeX unless truly unavoidable and still fully general.",
@@ -750,8 +761,13 @@ Be specific and diagnostic, never generic ('be careful', 'work more slowly'). If
     const cleaned = textBlock.text.replace(/```json|```/g,'').trim();
     const parsed = JSON.parse(cleaned);
     if(!CATEGORIES.includes(parsed.errorCategory)) parsed.errorCategory = CATEGORIES[CATEGORIES.length-1] === parsed.errorCategory ? parsed.errorCategory : parsed.errorCategory;
-    currentAnalysis = parsed;
-    renderAnalysisForm(parsed);
+    if(parsed.noMistakeFound){
+      currentAnalysis = null;
+      renderNoMistakeFound(parsed);
+    }else{
+      currentAnalysis = parsed;
+      renderAnalysisForm(parsed);
+    }
   }catch(err){
     document.getElementById('analysisFields').innerHTML = '';
     const isAuthErr = /api.?key|unauthorized|401|authentication/i.test(err.message || '');
@@ -763,7 +779,22 @@ Be specific and diagnostic, never generic ('be careful', 'work more slowly'). If
   }
 }
 
+function renderNoMistakeFound(a){
+  document.getElementById('analysisFields').innerHTML = `
+    <div class="no-mistake-notice">
+      <p><b>I couldn't find an error on this page.</b></p>
+      <p>${escapeHtml(a.mistakeDescription || "The working shown looks correct throughout.")}</p>
+      <p class="muted" style="font-size:12.5px;">If a part is wrong, try a photo cropped closer to just that part, or make sure the final line of working is visible.</p>
+    </div>
+  `;
+  renderMath(document.getElementById('analysisFields'));
+  document.getElementById('saveEntryBtn').style.display = 'none';
+  document.getElementById('discardBtn').textContent = 'Try a different photo';
+}
+
 function renderAnalysisForm(a){
+  document.getElementById('saveEntryBtn').style.display = '';
+  document.getElementById('discardBtn').textContent = 'Discard';
   const catOptions = CATEGORIES.map(c=>`<option value="${escapeAttr(c)}" ${c===a.errorCategory?'selected':''}>${escapeHtml(c)}</option>`).join('');
   document.getElementById('analysisFields').innerHTML = `
     <div class="field-group" id="g_gist">
@@ -864,6 +895,8 @@ function resetAddForm(){
   document.getElementById('topicInput').value = '';
   document.getElementById('marksInput').value = '';
   document.getElementById('paperInput').value = lastPaperName;
+  document.getElementById('saveEntryBtn').style.display = '';
+  document.getElementById('discardBtn').textContent = 'Discard';
   hideErr();
 }
 
