@@ -138,6 +138,15 @@
   .upload-zone:hover{border-color:var(--red);}
   .upload-zone p{margin:8px 0 0; font-size:13.5px; color:var(--text-muted);}
   .preview-img{max-width:100%; max-height:280px; border-radius:8px; display:block; margin:6px auto 0;}
+  .add-photo-link{
+    background:none; border:none; color:var(--text-muted); font-size:12.5px; font-weight:600;
+    text-decoration:underline; text-underline-offset:2px; cursor:pointer; padding:0;
+  }
+  .upload-zone.second{padding:16px; margin-top:8px;}
+  .remove-photo-btn{
+    background:none; border:none; color:var(--red); font-size:12.5px; font-weight:600;
+    cursor:pointer; padding:8px 0 0; display:block; margin:0 auto;
+  }
 
   .analysis-block{margin-top:18px; border-top:1px solid var(--border); padding-top:16px;}
   .analysis-block h4{
@@ -174,12 +183,12 @@
   .rank-detail{margin:14px 0 0 38px; display:none;}
   .rank-detail.open{display:block;}
   .rank-detail .advice-list{margin:0 0 12px; padding-left:18px; font-size:13.5px; line-height:1.6; color:var(--text);}
-  .rank-detail .entry-row{
+  .entry-row{
     font-size:13px; color:var(--text-muted); padding:6px 0; border-top:1px solid var(--border);
     cursor:pointer;
   }
-  .rank-detail .entry-row:hover{color:var(--text);}
-  .rank-detail .entry-row b{color:var(--text); font-weight:600;}
+  .entry-row:hover{color:var(--text);}
+  .entry-row b{color:var(--text); font-weight:600;}
   .entry-card.jump-highlight{border-color:var(--red); box-shadow:0 0 0 1px var(--red);}
 
   /* ---- entries list ---- */
@@ -287,6 +296,18 @@
   .paper-stats{font-size:12.5px; color:var(--text-muted); margin-top:4px;}
   .paper-bar-track{height:6px; background:var(--surface-2); border-radius:3px; margin-top:8px; overflow:hidden;}
   .paper-bar-fill{height:100%; background:var(--amber); border-radius:3px;}
+  .rename-paper-btn{
+    background:none; border:none; color:var(--text-muted); font-size:11.5px; font-weight:600;
+    cursor:pointer; padding:8px 0 0; text-decoration:underline; text-underline-offset:2px;
+  }
+  .rename-row{display:none; gap:8px; margin-top:8px;}
+  .rename-row input{flex:1;}
+  .rename-row .btn{padding:9px 14px; font-size:13px;}
+  .paper-card{cursor:pointer;}
+  .paper-score{color:var(--text); font-weight:600;}
+  .paper-detail{display:none; margin-top:12px; border-top:1px solid var(--border); padding-top:12px;}
+  .paper-detail.open{display:block;}
+  .paper-trend{font-size:13px; color:var(--text-muted); font-style:italic; margin:0 0 10px;}
 
   .toast{
     position:fixed; bottom:22px; left:50%; transform:translateX(-50%);
@@ -307,6 +328,9 @@
   }
   .math-preview:empty::before{content:'Preview appears here'; color:var(--text-muted); font-size:12.5px;}
   .field-group{margin:16px 0;}
+  .answer-check{display:flex; gap:12px; margin:16px 0;}
+  .answer-check .field-group{margin:0; flex:1; min-width:0;}
+  .answer-check #g_correctAnswer .math-preview{border-color:rgba(123,174,134,0.4);}
   .field-group:first-child{margin-top:0;}
   .edit-toggle{
     background:none; border:none; color:var(--text-muted); font-size:11.5px; font-weight:600;
@@ -320,6 +344,7 @@
 
   /* ---- mobile ---- */
   @media (max-width: 560px){
+    .answer-check{flex-direction:column;}
     .wrap{padding:18px 14px 70px;}
     header.top h1{font-size:26px;}
     header.top p{font-size:13.5px;}
@@ -340,6 +365,7 @@
 
     .plan-add-row{flex-direction:column;}
     .plan-add-row .btn{width:100%;}
+    .rename-row{flex-direction:column;}
 
     .resolve-banner .rb-row{flex-direction:column; align-items:flex-start; gap:8px;}
     .resolve-banner .rb-actions{width:100%;}
@@ -442,7 +468,8 @@
       <input type="text" id="topicInput" placeholder="Leave blank and I'll infer it from the photo">
 
       <label class="field-label">Paper / session (optional — group mistakes from the same paper)</label>
-      <input type="text" id="paperInput" placeholder="e.g. 2023 NHT Exam 2, Practice paper 4">
+      <input type="text" id="paperInput" list="paperSuggestions" placeholder="e.g. 2023 NHT Exam 2, Practice paper 4">
+      <datalist id="paperSuggestions"></datalist>
 
       <label class="field-label">Marks allocated (optional, if you know it)</label>
       <input type="number" id="marksInput" min="0" placeholder="e.g. 4">
@@ -461,6 +488,15 @@
         <img id="previewImg" class="preview-img" style="display:none;">
       </div>
       <input type="file" accept="image/*" capture="environment" id="photoInput" style="display:none;">
+
+      <div id="secondPhotoRow" style="display:none; margin-top:10px;">
+        <button class="add-photo-link" id="addSecondPhotoBtn" type="button">+ Add a second photo (e.g. working that continues on another page, or a closer crop)</button>
+        <div class="upload-zone second" id="uploadZone2" style="display:none;">
+          <img id="previewImg2" class="preview-img" style="display:none;">
+          <button class="remove-photo-btn" id="removeSecondPhotoBtn" type="button" style="display:none;">Remove second photo</button>
+        </div>
+        <input type="file" accept="image/*" capture="environment" id="photoInput2" style="display:none;">
+      </div>
 
       <div id="analyzeRow" style="margin-top:16px; display:none;">
         <button class="btn" id="analyzeBtn" style="width:100%;">Analyse this mistake</button>
@@ -564,7 +600,7 @@
       <p>Give a mistake a "Paper / session" name when you add it, and full papers will show up here with marks lost per attempt, so you can see whether that number is actually dropping over time.</p>
     </div>
     <div id="papersContent" style="display:none;">
-      <p class="trend-note">Chronological — oldest attempt first, so you can see whether marks lost per paper is trending down.</p>
+      <p class="trend-note">Chronological — oldest attempt first. Tap a paper to see its mistakes and how it compares to your last one.</p>
       <div id="papersList"></div>
     </div>
   </div>
@@ -593,6 +629,7 @@ let selectedExamType = 'CAS';
 let selectedConfidence = 'confident';
 let lastPaperName = '';
 let currentPhoto = null;   // {full: base64 for API, thumb: base64 for storage, mediaType}
+let currentPhoto2 = null;  // optional second photo, same shape
 let currentAnalysis = null;
 let dashSort = 'impact';
 let dashFilterSubject = 'all';
@@ -631,6 +668,7 @@ async function loadEntries(){
   }catch(e){
     entries = [];
   }
+  refreshPaperDatalist();
 }
 async function persistEntries(){
   try{
@@ -638,6 +676,13 @@ async function persistEntries(){
   }catch(e){
     showToast("Storage error — entry may not have saved (browser storage may be full)");
   }
+  refreshPaperDatalist();
+}
+function refreshPaperDatalist(){
+  const dl = document.getElementById('paperSuggestions');
+  if(!dl) return;
+  const names = [...new Set(entries.filter(e=>e.paper).map(e=>e.paper))].sort();
+  dl.innerHTML = names.map(n=>`<option value="${escapeAttr(n)}">`).join('');
 }
 
 // ---------- tabs ----------
@@ -686,6 +731,7 @@ document.getElementById('photoInput').addEventListener('change', async (e)=>{
     document.getElementById('previewImg').src = full;
     document.getElementById('previewImg').style.display = 'block';
     document.getElementById('uploadPrompt').style.display = 'none';
+    document.getElementById('secondPhotoRow').style.display = 'block';
     document.getElementById('analyzeRow').style.display = 'block';
     document.getElementById('analysisBlock').style.display = 'none';
     currentAnalysis = null;
@@ -693,6 +739,37 @@ document.getElementById('photoInput').addEventListener('change', async (e)=>{
   }catch(err){
     showErr("Couldn't read that image — try a different photo.");
   }
+});
+
+document.getElementById('addSecondPhotoBtn').addEventListener('click', ()=>{
+  document.getElementById('photoInput2').click();
+});
+document.getElementById('photoInput2').addEventListener('change', async (e)=>{
+  const file = e.target.files[0];
+  if(!file) return;
+  try{
+    const full = await resizeImage(file, 1400, 0.82);
+    const thumb = await resizeImage(file, 260, 0.5);
+    currentPhoto2 = { full: full.split(',')[1], thumb, mediaType: 'image/jpeg' };
+    document.getElementById('previewImg2').src = full;
+    document.getElementById('previewImg2').style.display = 'block';
+    document.getElementById('uploadZone2').style.display = 'block';
+    document.getElementById('removeSecondPhotoBtn').style.display = 'block';
+    document.getElementById('addSecondPhotoBtn').style.display = 'none';
+    currentAnalysis = null;
+    document.getElementById('analysisBlock').style.display = 'none';
+    hideErr();
+  }catch(err){
+    showErr("Couldn't read that second image — try again.");
+  }
+});
+document.getElementById('removeSecondPhotoBtn').addEventListener('click', ()=>{
+  currentPhoto2 = null;
+  document.getElementById('photoInput2').value = '';
+  document.getElementById('previewImg2').style.display = 'none';
+  document.getElementById('uploadZone2').style.display = 'none';
+  document.getElementById('removeSecondPhotoBtn').style.display = 'none';
+  document.getElementById('addSecondPhotoBtn').style.display = 'block';
 });
 
 function resizeImage(file, maxDim, quality){
@@ -747,33 +824,45 @@ async function analyseCurrentPhoto(){
     `Exam type: ${selectedExamType === 'CAS' ? 'CAS-allowed (technology active)' : 'Non-CAS (technology-free)'}`,
     topic ? `Student-provided topic: ${topic}` : `Topic: not provided — infer it from the question`,
     marks ? `Marks allocated: ${marks}` : `Marks allocated: not provided — infer from the question if visible, otherwise null`,
-    `Student's own recollection: ${selectedConfidence === 'confident' ? 'thought this was correct when they wrote it (so if it is wrong, it is likely a slip, not a knowledge gap)' : "wasn't sure / was guessing when they wrote it (so it may reflect an actual gap in knowledge, not just a slip)"}`
-  ].join('\n');
+    `Student's own recollection: ${selectedConfidence === 'confident' ? 'thought this was correct when they wrote it (so if it is wrong, it is likely a slip, not a knowledge gap)' : "wasn't sure / was guessing when they wrote it (so it may reflect an actual gap in knowledge, not just a slip)"}`,
+    currentPhoto2 ? `Two photos are attached — treat them as one continuous piece of work (e.g. the working continues onto a second page, or the second image is a closer crop of part of the first). Do not treat them as two separate questions unless they clearly are.` : ''
+  ].filter(Boolean).join('\n');
 
-  const systemPrompt = `You are an experienced VCE Mathematical Methods and Specialist Mathematics exam marker helping a student build an error log. You will be shown a photo of a question the student got wrong, including their handwritten working.
+  const systemPrompt = `You are an experienced VCE Mathematical Methods and Specialist Mathematics exam marker helping a student build an error log. You will be shown one or two photos of a question the student got wrong, including their handwritten working.
 
-Write ALL maths using LaTeX, wrapped in single dollar signs for inline rendering — e.g. $\\frac{1}{2}x + 3 = 7$, $x^2 - 4$, $\\frac{dy}{dx}$, $\\int f(x)\\,dx$, $\\sin^{-1}(x)$, $\\sqrt{3}$, $x \\leq 5$. Always use \\frac{}{} for fractions (never "1/2" as plain text), ^{} for powers, _{} for subscripts, and proper LaTeX commands for roots, trig, limits, vectors (\\vec{v} or \\mathbf{v}), etc. Never spell operations out in words (not "x squared", not "the derivative of"). Every field is a terse log entry, not an explanation — no filler words, no restating the question, no "the student".
+Write ALL maths using LaTeX, wrapped in single dollar signs for inline rendering — e.g. $\\frac{1}{2}x + 3 = 7$, $x^2 - 4$, $\\frac{dy}{dx}$, $\\int f(x)\\,dx$, $\\sin^{-1}(x)$, $\\sqrt{3}$, $x \\leq 5$. Always use \\frac{}{} for fractions (never "1/2" as plain text), ^{} for powers, _{} for subscripts, and proper LaTeX commands for roots, trig, limits, vectors (\\vec{v} or \\mathbf{v}), etc. Never spell operations out in words (not "x squared", not "the derivative of"). Every JSON field is a terse log entry, not an explanation — no filler words, no restating the question, no "the student".
 
-MULTI-PART QUESTIONS: VCE questions are very often split into labelled parts — (a), (b)(i), (b)(ii), etc — and the student may have photographed the whole question at once. Do not assume the first part, or any particular part, is the one that's wrong. Work through EVERY part shown, checking each one's working against what it actually required, and find the SPECIFIC part that contains a genuine mathematical error. If more than one part has an error, report on whichever is worth the most marks (or the earliest one if marks aren't given). State which part in "questionGist" itself, e.g. "Part (b)(ii): solve $...$ for $x$" — if the question has no labelled parts, just describe the question as normal with no part prefix.
+MULTI-PART QUESTIONS: VCE questions are very often split into labelled parts — (a), (b)(i), (b)(ii), etc. Do not assume the first part, or any particular part, is the one that's wrong. Work through EVERY part shown, checking each one's working against what it actually required, and find the SPECIFIC part that contains a genuine mathematical error. If more than one part has an error, report on whichever is worth the most marks (or the earliest one if marks aren't given). State which part in "questionGist" itself, e.g. "Part (b)(ii): solve $...$ for $x$" — if the question has no labelled parts, just describe the question as normal with no part prefix.
 
-CHECK BEFORE YOU DIAGNOSE: it is common for a photographed page to contain parts that are all actually correct, or for the working shown to reach the right answer by valid reasoning. If, after carefully checking every part on the page, you cannot find an actual mathematical error anywhere in the working shown, do NOT invent one. Set "noMistakeFound" to true and use "mistakeDescription" to say plainly what you actually see (e.g. "All parts shown work out correctly — no error visible on this page").
+WORK IT OUT YOURSELF FIRST — REQUIRED PROCESS: before writing any JSON, write a plain-text reasoning section under the header "REASONING:". In it, go through the question part by part. For each part: independently derive the correct final answer yourself, from scratch, as if you were solving it fresh — then read what the student actually wrote as their final answer for that part, and state explicitly whether the two match. Do this comparison for every part before concluding anything. Do not skip straight to a verdict — the point of this section is that your diagnosis in the JSON must be grounded in an explicit answer-vs-answer comparison, not an impression. This reasoning section can be as long as it needs to be and is never shown to the student directly.
 
-CORRECTNESS IS NON-NEGOTIABLE: every equation, identity, or expression you write must be mathematically true and must directly reference what is actually visible in THIS photo — the real numbers, the real expression, the real line of working. Never invent a generic-sounding "rule" or identity to make the advice sound sharper (e.g. never write something like $\\frac{x}{ax}=\\frac{1}{a}$ as if it were a general law — it isn't one). If you cannot see clearly enough to state a specific equation correctly, describe the check in plain words instead of fabricating notation, and lower "confidence" accordingly. A vague-but-true description beats a precise-but-wrong one.
+CHECK BEFORE YOU DIAGNOSE: it is common for a photographed page to contain parts that are all actually correct. If, after independently deriving and comparing every part, no part's student-answer disagrees with your own correctly-derived answer, do NOT invent an error. Set "noMistakeFound" to true.
 
-Respond with ONLY a JSON object, no markdown fences, no preamble, matching exactly this shape:
+CORRECTNESS IS NON-NEGOTIABLE: every equation, identity, or expression you write must be mathematically true and must directly reference what is actually visible in the photo(s) — the real numbers, the real expression, the real line of working. Never invent a generic-sounding "rule" or identity to make the advice sound sharper (e.g. never write something like $\\frac{x}{ax}=\\frac{1}{a}$ as if it were a general law — it isn't one). If you cannot see clearly enough to state a specific equation correctly, describe the check in plain words instead of fabricating notation, and lower "confidence" accordingly. A vague-but-true description beats a precise-but-wrong one.
+
+Once your REASONING section is complete, write the exact line ###JSON### on its own line, then write ONLY a JSON object after it — no markdown fences, no text after the JSON — matching exactly this shape:
 {
-  "noMistakeFound": true or false — true only if you checked every part shown and none contain an actual error,
+  "noMistakeFound": true or false — true only if your part-by-part reasoning above found every student answer matching your independently-derived correct answer,
   "questionGist": "the question itself in LaTeX ($...$), as short as possible, under 12 words — prefix with the part label if the question has labelled parts",
   "topicGuess": "a short topic label (2-4 words, e.g. 'related rates', 'vector proof', 'binomial distribution') — only used if the student left the topic field blank, so make your best inference from the question",
+  "studentFinalAnswer": "exactly what the student wrote as their final answer for the relevant part, in LaTeX ($...$) — null if noMistakeFound is true",
+  "correctFinalAnswer": "the correct final answer YOU independently derived for that same part, in LaTeX ($...$) — null if noMistakeFound is true",
   "mistakeDescription": "the exact error in LaTeX ($...$), blunt and specific, under 15 words — e.g. 'dropped the $-$ sign expanding $(x-3)^2$' not a full sentence explaining it. If noMistakeFound is true, describe what you actually see instead.",
   "errorCategory": "must be exactly one of: ${CATEGORIES.join(' | ')}",
   "rootCause": "the underlying habit, under 10 words, LaTeX ($...$) for any maths",
   "actionAdvice": "a broad EXAM-STRATEGY habit for this whole error CATEGORY — a physical action, not a maths rule. Must generalise to ANY question in this category regardless of topic, so it must NOT mention the specific numbers, formula, or topic from this photo (no naming the actual function, expression, or technique used here). Think in the style of: 'redo the full calculation on fresh space and compare', 'recompute using a second method', 'read the question twice before writing anything', 'list every given value before starting', 'say the final answer out loud and check it answers what was asked'. Costs seconds mid-question or a couple of minutes in leftover time. Under 15 words, plain words, no LaTeX unless truly unavoidable and still fully general.",
   "marksLost": integer or null if truly not determinable,
-  "confidence": "high | medium | low — how legible/clear the photo was"
+  "confidence": "high | medium | low — how legible/clear the photo(s) were"
 }
 
 Be specific and diagnostic, never generic ('be careful', 'work more slowly'). If the photo is unclear, say so via a low confidence and note what was illegible in mistakeDescription.`;
+
+  const imageBlocks = [
+    { type: "image", source: { type: "base64", media_type: currentPhoto.mediaType, data: currentPhoto.full } }
+  ];
+  if(currentPhoto2){
+    imageBlocks.push({ type: "image", source: { type: "base64", media_type: currentPhoto2.mediaType, data: currentPhoto2.full } });
+  }
 
   try{
     const response = await fetch("https://api.anthropic.com/v1/messages", {
@@ -786,14 +875,11 @@ Be specific and diagnostic, never generic ('be careful', 'work more slowly'). If
       },
       body: JSON.stringify({
         model: "claude-sonnet-5",
-        max_tokens: 1000,
+        max_tokens: 2200,
         system: systemPrompt,
         messages: [{
           role: "user",
-          content: [
-            { type: "image", source: { type: "base64", media_type: currentPhoto.mediaType, data: currentPhoto.full } },
-            { type: "text", text: contextLines }
-          ]
+          content: [...imageBlocks, { type: "text", text: contextLines }]
         }]
       })
     });
@@ -804,8 +890,7 @@ Be specific and diagnostic, never generic ('be careful', 'work more slowly'). If
     }
     const textBlock = (data.content || []).find(c=>c.type==='text');
     if(!textBlock) throw new Error('No response text');
-    const cleaned = textBlock.text.replace(/```json|```/g,'').trim();
-    const parsed = JSON.parse(cleaned);
+    const parsed = extractJson(textBlock.text);
     if(!CATEGORIES.includes(parsed.errorCategory)) parsed.errorCategory = CATEGORIES[CATEGORIES.length-1] === parsed.errorCategory ? parsed.errorCategory : parsed.errorCategory;
     if(parsed.noMistakeFound){
       currentAnalysis = null;
@@ -850,6 +935,21 @@ function renderAnalysisForm(a){
       <button class="edit-toggle" data-group="g_gist" data-focus="f_gist">Edit source</button>
     </div>
 
+    <div class="answer-check">
+      <div class="field-group" id="g_studentAnswer">
+        <label class="field-label">You wrote</label>
+        <div class="math-preview" id="p_studentAnswer"></div>
+        <input type="text" class="raw-src" id="f_studentAnswer" value="${escapeAttr(a.studentFinalAnswer||'')}">
+        <button class="edit-toggle" data-group="g_studentAnswer" data-focus="f_studentAnswer">Edit source</button>
+      </div>
+      <div class="field-group" id="g_correctAnswer">
+        <label class="field-label">Correct answer</label>
+        <div class="math-preview" id="p_correctAnswer"></div>
+        <input type="text" class="raw-src" id="f_correctAnswer" value="${escapeAttr(a.correctFinalAnswer||'')}">
+        <button class="edit-toggle" data-group="g_correctAnswer" data-focus="f_correctAnswer">Edit source</button>
+      </div>
+    </div>
+
     <div class="field-group" id="g_mistake">
       <label class="field-label">What went wrong</label>
       <div class="math-preview" id="p_mistake"></div>
@@ -879,7 +979,7 @@ function renderAnalysisForm(a){
     ${a.confidence==='low' ? '<p class="muted" style="font-size:12.5px;margin-top:10px;">⚠ Photo was hard to read — double check the fields above before saving.</p>' : ''}
   `;
 
-  const pairs = [['f_gist','p_gist'], ['f_mistake','p_mistake'], ['f_root','p_root'], ['f_action','p_action']];
+  const pairs = [['f_gist','p_gist'], ['f_studentAnswer','p_studentAnswer'], ['f_correctAnswer','p_correctAnswer'], ['f_mistake','p_mistake'], ['f_root','p_root'], ['f_action','p_action']];
   pairs.forEach(([fieldId, previewId])=>{
     const field = document.getElementById(fieldId);
     const preview = document.getElementById(previewId);
@@ -915,12 +1015,15 @@ document.getElementById('saveEntryBtn').addEventListener('click', async ()=>{
     paper: paperName || null,
     topic: userTopic || (currentAnalysis.topicGuess || '').trim(),
     questionGist: document.getElementById('f_gist').value.trim(),
+    studentFinalAnswer: document.getElementById('f_studentAnswer').value.trim(),
+    correctFinalAnswer: document.getElementById('f_correctAnswer').value.trim(),
     mistakeDescription: document.getElementById('f_mistake').value.trim(),
     errorCategory: document.getElementById('f_category').value,
     rootCause: document.getElementById('f_root').value.trim(),
     actionAdvice: document.getElementById('f_action').value.trim(),
     marksLost: document.getElementById('f_marks').value ? parseInt(document.getElementById('f_marks').value) : null,
-    thumb: currentPhoto ? currentPhoto.thumb : null
+    thumb: currentPhoto ? currentPhoto.thumb : null,
+    thumb2: currentPhoto2 ? currentPhoto2.thumb : null
   };
   entries.unshift(entry);
   await persistEntries();
@@ -932,10 +1035,17 @@ document.getElementById('saveEntryBtn').addEventListener('click', async ()=>{
 
 function resetAddForm(){
   currentPhoto = null;
+  currentPhoto2 = null;
   currentAnalysis = null;
   document.getElementById('photoInput').value = '';
+  document.getElementById('photoInput2').value = '';
   document.getElementById('previewImg').style.display = 'none';
   document.getElementById('uploadPrompt').style.display = 'block';
+  document.getElementById('secondPhotoRow').style.display = 'none';
+  document.getElementById('uploadZone2').style.display = 'none';
+  document.getElementById('previewImg2').style.display = 'none';
+  document.getElementById('removeSecondPhotoBtn').style.display = 'none';
+  document.getElementById('addSecondPhotoBtn').style.display = 'block';
   document.getElementById('analyzeRow').style.display = 'none';
   document.getElementById('analysisBlock').style.display = 'none';
   document.getElementById('topicInput').value = '';
@@ -1195,7 +1305,11 @@ function renderEntries(){
       </div>
       <div class="entry-body" id="body-${e.id}">
         ${e.thumb ? `<img src="${e.thumb}">` : ''}
+        ${e.thumb2 ? `<img src="${e.thumb2}">` : ''}
         <p><b>What the question asked</b>${escapeHtml(e.questionGist||'—')}</p>
+        ${(e.studentFinalAnswer || e.correctFinalAnswer) ? `
+        <p><b>You wrote</b>${escapeHtml(e.studentFinalAnswer||'—')}</p>
+        <p><b>Correct answer</b>${escapeHtml(e.correctFinalAnswer||'—')}</p>` : ''}
         <p><b>What went wrong</b>${escapeHtml(e.mistakeDescription||'—')}</p>
         <p><b>Root cause</b>${escapeHtml(e.rootCause||'—')}</p>
         <p><b>Efficient check for next time</b>${escapeHtml(e.actionAdvice||'—')}</p>
@@ -1245,6 +1359,16 @@ function escapeHtml(s){
   return String(s).replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 }
 function escapeAttr(s){ return escapeHtml(s); }
+function extractJson(text){
+  let t = text.replace(/```json|```/g, '');
+  const marker = '###JSON###';
+  const idx = t.lastIndexOf(marker);
+  if(idx !== -1) t = t.slice(idx + marker.length);
+  const start = t.indexOf('{');
+  const end = t.lastIndexOf('}');
+  if(start === -1 || end === -1 || end < start) throw new Error('No JSON found in response');
+  return JSON.parse(t.slice(start, end + 1));
+}
 function renderMath(el){
   if(window.renderMathInElement){
     try{
@@ -1459,22 +1583,101 @@ function renderPapers(){
     map[e.paper].marks += (e.marksLost || 0);
   });
   const papers = order.map(name=>map[name]).sort((a,b)=> a.firstTs - b.firstTs);
-  const maxMarks = Math.max(...papers.map(p=>p.marks), 1);
+  const maxBarMarks = Math.max(...papers.map(p=>p.marks), 1);
 
-  document.getElementById('papersList').innerHTML = papers.map(p=>{
-    const pct = Math.max(6, Math.round((p.marks/maxMarks)*100));
+  // exam type (mode among the paper's entries) decides the out-of-marks: Non-CAS/Exam 1 = 40, CAS/Exam 2 = 80
+  papers.forEach(p=>{
+    const counts = {};
+    p.entries.forEach(e=>{ const t = e.examType || 'CAS'; counts[t] = (counts[t]||0)+1; });
+    p.examType = Object.entries(counts).sort((a,b)=>b[1]-a[1])[0][0];
+    p.maxMarks = p.examType === 'CAS' ? 80 : 40;
+    p.score = Math.max(0, p.maxMarks - p.marks);
+    p.scorePct = Math.round((p.score / p.maxMarks) * 100);
+  });
+
+  document.getElementById('papersList').innerHTML = papers.map((p,i)=>{
+    const barPct = Math.max(6, Math.round((p.marks/maxBarMarks)*100));
     const dateStr = new Date(p.firstTs).toLocaleDateString('en-AU', {day:'numeric', month:'short', year:'numeric'});
+    const examTypeLabel = p.examType === 'CAS' ? 'Exam 2 / CAS' : 'Exam 1 / Non-CAS';
+
+    let trend;
+    if(i === 0){
+      trend = "First paper logged — future papers will show how you're trending.";
+    }else{
+      const diff = p.scorePct - papers[i-1].scorePct;
+      const bestSoFar = Math.max(...papers.slice(0, i+1).map(x=>x.scorePct)) === p.scorePct;
+      if(bestSoFar && diff > 0){
+        trend = `Your best result yet — up ${diff} points from your last paper.`;
+      }else if(diff > 3){
+        trend = `Up ${diff} points from your last paper — trending in the right direction.`;
+      }else if(diff < -3){
+        trend = `Down ${Math.abs(diff)} points from your last paper.`;
+      }else{
+        trend = `About level with your last paper (${diff>=0?'+':''}${diff} points).`;
+      }
+    }
+
+    const mistakeRows = p.entries.map(e=>`
+      <div class="entry-row" data-entry-id="${e.id}"><b>${escapeHtml(e.errorCategory)}</b> — ${escapeHtml(e.mistakeDescription||'')}${e.marksLost!=null ? ' ('+e.marksLost+' mk)' : ''}</div>
+    `).join('');
+
     return `
-      <div class="paper-card">
+      <div class="paper-card" data-idx="${i}">
         <div class="paper-top">
-          <div class="paper-name">${escapeHtml(p.name)}</div>
+          <div class="paper-name" id="pname-${i}">${escapeHtml(p.name)}</div>
           <div class="paper-date">${dateStr}</div>
         </div>
-        <div class="paper-stats">${p.entries.length} mistake${p.entries.length===1?'':'s'} logged · ${p.marks} mk lost</div>
-        <div class="paper-bar-track"><div class="paper-bar-fill" style="width:${pct}%"></div></div>
+        <div class="paper-stats">${examTypeLabel} · ${p.entries.length} mistake${p.entries.length===1?'':'s'} logged · <span class="paper-score">Est. ${p.score}/${p.maxMarks} (${p.scorePct}%)</span></div>
+        <div class="paper-bar-track"><div class="paper-bar-fill" style="width:${barPct}%"></div></div>
+        <div class="paper-detail" id="paper-detail-${i}">
+          <p class="paper-trend">${escapeHtml(trend)}</p>
+          ${mistakeRows}
+          <button class="rename-paper-btn" data-idx="${i}">Rename / merge</button>
+          <div class="rename-row" id="rename-${i}" style="display:none;">
+            <input type="text" id="renameInput-${i}" list="paperSuggestions" value="${escapeAttr(p.name)}">
+            <button class="btn secondary rename-save" data-idx="${i}">Save</button>
+          </div>
+        </div>
       </div>
     `;
   }).join('');
+
+  document.querySelectorAll('.paper-card').forEach(card=>{
+    card.addEventListener('click', (ev)=>{
+      if(ev.target.closest('.rename-paper-btn, .rename-row, .entry-row')) return;
+      document.getElementById('paper-detail-'+card.dataset.idx).classList.toggle('open');
+    });
+  });
+  document.querySelectorAll('.rename-paper-btn').forEach(btn=>{
+    btn.addEventListener('click', (ev)=>{
+      ev.stopPropagation();
+      const row = document.getElementById('rename-'+btn.dataset.idx);
+      row.style.display = row.style.display === 'none' ? 'flex' : 'none';
+      if(row.style.display === 'flex') document.getElementById('renameInput-'+btn.dataset.idx).focus();
+    });
+  });
+  document.querySelectorAll('.rename-save').forEach(btn=>{
+    btn.addEventListener('click', async (ev)=>{
+      ev.stopPropagation();
+      const idx = parseInt(btn.dataset.idx);
+      const oldName = papers[idx].name;
+      const newName = document.getElementById('renameInput-'+idx).value.trim();
+      if(!newName || newName === oldName) return;
+      let changed = 0;
+      entries.forEach(e=>{ if(e.paper === oldName){ e.paper = newName; changed++; } });
+      await persistEntries();
+      showToast(changed > 1 ? `Merged ${changed} mistakes into "${newName}"` : `Renamed to "${newName}"`);
+      renderPapers();
+      renderEntries();
+    });
+  });
+  document.querySelectorAll('#papersList .entry-row').forEach(row=>{
+    row.addEventListener('click', (ev)=>{
+      ev.stopPropagation();
+      goToEntry(row.dataset.entryId);
+    });
+  });
+  renderMath(document.getElementById('papersList'));
 }
 
 // ---------- init ----------
