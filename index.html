@@ -1,0 +1,1092 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Spesh Bank — VCE Specialist Maths, generated on demand</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;0,6..72,700;1,6..72,500&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/contrib/auto-render.min.js"></script>
+<style>
+  :root{
+    --ink:#101c33;
+    --ink-2:#17263f;
+    --ink-3:#20304d;
+    --paper:#fbf8f1;
+    --paper-line:#ded5bd;
+    --graphite:#211f1a;
+    --graphite-soft:#5c574c;
+    --red-pen:#b23a2e;
+    --red-pen-soft:#e7cfc9;
+    --teal-ink:#1c6a58;
+    --teal-soft:#d6e6e0;
+    --focus:#e8b23d;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:
+      linear-gradient(180deg, rgba(16,28,51,0.0), rgba(16,28,51,0.0)),
+      repeating-linear-gradient(0deg, rgba(255,255,255,0.028) 0px, rgba(255,255,255,0.028) 1px, transparent 1px, transparent 34px),
+      repeating-linear-gradient(90deg, rgba(255,255,255,0.028) 0px, rgba(255,255,255,0.028) 1px, transparent 1px, transparent 34px),
+      var(--ink);
+    color:var(--paper);
+    font-family:'Inter', system-ui, sans-serif;
+    min-height:100vh;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit;}
+  ::selection{background:var(--red-pen); color:var(--paper);}
+  :focus-visible{outline:2.5px solid var(--focus); outline-offset:2px; border-radius:4px;}
+
+  .app{
+    display:grid;
+    grid-template-columns: 288px 1fr;
+    min-height:100vh;
+  }
+
+  /* ---------- SIDEBAR ---------- */
+  .sidebar{
+    background:var(--ink-2);
+    border-right:1px solid rgba(255,255,255,0.08);
+    padding:26px 20px 20px;
+    display:flex;
+    flex-direction:column;
+    gap:22px;
+    position:sticky;
+    top:0;
+    height:100vh;
+    overflow-y:auto;
+  }
+  .brand{display:flex; flex-direction:column; gap:4px;}
+  .brand-mark{
+    font-family:'Newsreader', serif;
+    font-weight:700;
+    font-style:italic;
+    font-size:26px;
+    letter-spacing:0.2px;
+    color:var(--paper);
+    display:flex; align-items:baseline; gap:8px;
+  }
+  .brand-mark .dot{color:var(--red-pen); font-style:normal;}
+  .brand-tag{
+    font-size:12.5px; color:#9fb0c9; line-height:1.45; font-weight:500;
+  }
+
+  .side-label{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:10.5px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:#7c8ba8;
+    margin:0 0 8px 2px;
+  }
+
+  .topic-list{ display:flex; flex-direction:column; gap:3px; }
+  .topic-btn{
+    all:unset;
+    cursor:pointer;
+    display:flex; align-items:center; gap:11px;
+    padding:8.5px 10px;
+    border-radius:8px;
+    font-size:13.6px;
+    font-weight:500;
+    color:#c7d2e6;
+    border-left:2.5px solid transparent;
+    transition:background .12s ease, color .12s ease;
+  }
+  .topic-btn:hover{ background:rgba(255,255,255,0.05); }
+  .topic-btn .glyph{
+    font-family:'Newsreader', serif;
+    font-style:italic;
+    width:20px; text-align:center; flex-shrink:0;
+    color:#8fa2c2; font-size:15px;
+  }
+  .topic-btn.active{
+    background:rgba(178,58,46,0.16);
+    color:var(--paper);
+    border-left-color:var(--red-pen);
+  }
+  .topic-btn.active .glyph{ color:var(--red-pen); }
+
+  .pillrow{ display:flex; flex-wrap:wrap; gap:6px; }
+  .pill{
+    all:unset; cursor:pointer;
+    font-size:12px; font-weight:600;
+    padding:7px 11px;
+    border-radius:999px;
+    background:rgba(255,255,255,0.055);
+    color:#c7d2e6;
+    border:1px solid rgba(255,255,255,0.09);
+    transition:all .12s ease;
+  }
+  .pill:hover{ border-color:rgba(255,255,255,0.25); }
+  .pill.active{
+    background:var(--teal-ink);
+    color:#eafff8;
+    border-color:var(--teal-ink);
+  }
+
+  .generate-btn{
+    all:unset; cursor:pointer;
+    text-align:center;
+    font-family:'IBM Plex Mono', monospace;
+    font-weight:600;
+    font-size:12.5px;
+    letter-spacing:0.06em;
+    text-transform:uppercase;
+    padding:13px 10px;
+    border-radius:9px;
+    background:var(--red-pen);
+    color:#fdf0ec;
+    box-shadow: 0 1px 0 rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.12);
+    transition:transform .08s ease, filter .12s ease;
+  }
+  .generate-btn:hover{ filter:brightness(1.08); }
+  .generate-btn:active{ transform:translateY(1px); }
+  .generate-btn:disabled{ opacity:0.5; cursor:progress; filter:none; }
+
+  .sidebar hr{ border:none; border-top:1px solid rgba(255,255,255,0.09); margin:2px 0; }
+
+  .history-list{ display:flex; flex-direction:column; gap:2px; overflow-y:auto; }
+  .history-item{
+    all:unset; cursor:pointer;
+    display:flex; flex-direction:column; gap:1px;
+    padding:8px 9px;
+    border-radius:7px;
+    color:#aebbd4;
+  }
+  .history-item:hover{ background:rgba(255,255,255,0.05); color:var(--paper); }
+  .history-item .h-topic{ font-size:10.5px; font-family:'IBM Plex Mono',monospace; color:#7c8ba8; letter-spacing:0.04em; text-transform:uppercase;}
+  .history-item .h-title{ font-size:12.5px; font-weight:500; }
+  .history-empty{ font-size:12px; color:#66759373; padding:6px 9px; }
+
+  .sidebar-foot{
+    margin-top:auto;
+    font-size:11px;
+    line-height:1.5;
+    color:#647290;
+    padding-top:10px;
+    border-top:1px solid rgba(255,255,255,0.08);
+  }
+
+  /* ---------- MAIN ---------- */
+  .main{ padding:34px 44px 70px; max-width:900px; }
+  .topbar{
+    display:flex; align-items:center; justify-content:space-between;
+    margin-bottom:26px; flex-wrap:wrap; gap:10px;
+  }
+  .crumb{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px; letter-spacing:0.05em;
+    color:#8ea0c2;
+  }
+  .crumb b{ color:var(--paper); font-weight:600; }
+  .mobile-topics{ display:none; }
+
+  /* Empty state */
+  .empty-card{
+    background:var(--paper); color:var(--graphite);
+    border-radius:14px;
+    padding:54px 44px;
+    text-align:center;
+    box-shadow: 0 30px 60px -30px rgba(0,0,0,0.55);
+  }
+  .empty-card .glyph-big{
+    font-family:'Newsreader', serif; font-style:italic; font-size:46px; color:var(--red-pen); margin-bottom:14px;
+  }
+  .empty-card h2{
+    font-family:'Newsreader', serif; font-weight:600; font-size:24px; margin:0 0 10px;
+  }
+  .empty-card p{ color:var(--graphite-soft); font-size:14.5px; line-height:1.6; max-width:440px; margin:0 auto; }
+
+  /* Question paper card */
+  .paper-card{
+    background:var(--paper); color:var(--graphite);
+    border-radius:14px;
+    padding:30px 34px 26px;
+    box-shadow: 0 30px 60px -30px rgba(0,0,0,0.55);
+    position:relative;
+    overflow:hidden;
+  }
+  .paper-card::before{
+    content:"";
+    position:absolute; left:0; top:0; bottom:0; width:5px;
+    background:var(--red-pen);
+  }
+  .q-head{
+    display:flex; align-items:flex-start; justify-content:space-between; gap:14px;
+    padding-bottom:14px; margin-bottom:16px;
+    border-bottom:1px solid var(--paper-line);
+  }
+  .q-eyebrow{
+    font-family:'IBM Plex Mono', monospace; font-size:11px; letter-spacing:0.1em; text-transform:uppercase;
+    color:var(--graphite-soft); margin-bottom:4px;
+  }
+  .q-title{ font-family:'Newsreader', serif; font-weight:600; font-size:21px; line-height:1.3; }
+  .marks-chip{
+    flex-shrink:0;
+    font-family:'IBM Plex Mono', monospace; font-weight:600; font-size:12.5px;
+    color:var(--red-pen);
+    border:1.4px solid var(--red-pen);
+    border-radius:999px;
+    padding:5px 12px;
+    white-space:nowrap;
+  }
+  .q-stem{ font-size:15px; line-height:1.7; margin-bottom:6px; }
+  .q-parts{ list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:14px; }
+  .q-part{ display:flex; gap:12px; align-items:flex-start; }
+  .q-part .p-label{ font-family:'Newsreader',serif; font-weight:600; font-size:15px; flex-shrink:0; padding-top:1px; min-width:20px;}
+  .q-part .p-body{ flex:1; }
+  .q-part .p-prompt{ font-size:15px; line-height:1.7; }
+  .q-part .p-marks{
+    font-family:'IBM Plex Mono', monospace; font-size:11.5px; color:var(--graphite-soft);
+    margin-top:4px;
+  }
+  .q-options{ list-style:none; margin:10px 0 0; padding:0; display:flex; flex-direction:column; gap:7px; }
+  .q-options li{
+    font-size:14.5px; padding:8px 12px; border:1px solid var(--paper-line); border-radius:8px; line-height:1.55;
+  }
+
+  .action-row{ display:flex; gap:10px; margin-top:20px; flex-wrap:wrap; }
+  .action-btn{
+    all:unset; cursor:pointer;
+    font-family:'Inter', sans-serif; font-weight:600; font-size:13.5px;
+    padding:11px 18px; border-radius:9px;
+    display:inline-flex; align-items:center; gap:8px;
+    transition:filter .12s ease, transform .08s ease;
+  }
+  .action-btn:active{ transform:translateY(1px); }
+  .action-btn.solution{ background:var(--teal-ink); color:#eafff8; }
+  .action-btn.mark{ background:var(--ink); color:var(--paper); }
+  .action-btn:hover{ filter:brightness(1.1); }
+  .action-btn:disabled{ opacity:.5; cursor:progress; }
+
+  /* Panels below the question */
+  .panel{
+    background:var(--paper); color:var(--graphite);
+    border-radius:14px;
+    margin-top:16px;
+    padding:26px 34px;
+    box-shadow: 0 30px 60px -30px rgba(0,0,0,0.55);
+    animation: dropin .18s ease;
+  }
+  @keyframes dropin{ from{opacity:0; transform:translateY(-4px);} to{opacity:1; transform:none;} }
+
+  .panel-head{ display:flex; align-items:center; gap:10px; margin-bottom:16px;}
+  .panel-head .tag{
+    font-family:'IBM Plex Mono', monospace; font-size:10.5px; letter-spacing:0.12em; text-transform:uppercase;
+    color:var(--teal-ink); background:var(--teal-soft); padding:4px 9px; border-radius:5px;
+  }
+  .panel-head h3{ font-family:'Newsreader', serif; font-weight:600; font-size:18px; margin:0; }
+
+  .sol-block p{ font-size:14.6px; line-height:1.75; margin:0 0 12px; }
+  .final-answer{
+    font-size:14px; background:var(--teal-soft); border-radius:9px; padding:11px 15px; margin-top:6px;
+  }
+  .final-answer b{ color:var(--teal-ink); }
+
+  .insight-box{
+    margin-top:20px; padding:16px 18px; border-radius:10px;
+    background:#fff7ec; border:1px dashed #cd9a3d;
+  }
+  .insight-box .lbl{ font-family:'IBM Plex Mono',monospace; font-size:10.5px; letter-spacing:0.1em; text-transform:uppercase; color:#8a5e15; margin-bottom:6px;}
+  .insight-box p{ font-size:13.8px; line-height:1.65; margin:0 0 8px; color:#4a3a1c;}
+
+  .marking-notes{
+    margin-top:14px; font-size:12.8px; color:var(--graphite-soft); font-style:italic; line-height:1.6;
+  }
+
+  .loader{
+    display:flex; align-items:center; gap:10px; font-size:13.5px; color:var(--graphite-soft); padding:6px 0;
+  }
+  .spinner{
+    width:15px; height:15px; border-radius:50%;
+    border:2px solid var(--paper-line); border-top-color:var(--red-pen);
+    animation:spin .7s linear infinite;
+  }
+  @keyframes spin{ to{ transform:rotate(360deg);} }
+
+  /* Marking upload */
+  .dropzone{
+    border:1.6px dashed var(--paper-line); border-radius:12px;
+    padding:26px; text-align:center; cursor:pointer;
+    transition:border-color .12s ease, background .12s ease;
+  }
+  .dropzone:hover{ border-color:var(--red-pen); background:#fff9f6; }
+  .dropzone.has-file{ border-style:solid; }
+  .dropzone input{ display:none; }
+  .dz-label{ font-size:13.5px; color:var(--graphite-soft); }
+  .dz-label b{ color:var(--graphite); }
+  .preview-wrap{ display:flex; align-items:center; gap:14px; margin-top:14px; flex-wrap:wrap; }
+  .preview-wrap img{ max-height:150px; border-radius:9px; border:1px solid var(--paper-line); }
+  .mark-submit-row{ display:flex; gap:10px; align-items:center; margin-top:16px; }
+
+  /* Marking results */
+  .result-top{ display:flex; align-items:center; gap:18px; margin-bottom:18px; flex-wrap:wrap; }
+  .score-circle{
+    font-family:'Caveat', cursive; font-weight:700; font-size:34px; color:var(--red-pen);
+    border:2.6px solid var(--red-pen); border-radius:50%;
+    width:78px; height:78px; display:flex; align-items:center; justify-content:center;
+    transform:rotate(-4deg); flex-shrink:0;
+    line-height:1;
+  }
+  .result-feedback{ font-size:14px; line-height:1.65; }
+  .breakdown-list{ list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:9px; }
+  .breakdown-item{
+    display:flex; gap:12px; align-items:flex-start;
+    padding:10px 13px; border-radius:9px; background:#f4f0e6;
+  }
+  .breakdown-item .mark-tag{
+    font-family:'Caveat', cursive; font-weight:700; font-size:19px; color:var(--red-pen);
+    flex-shrink:0; min-width:44px; text-align:center;
+  }
+  .breakdown-item .part-tag{ font-weight:600; font-size:13px; flex-shrink:0; min-width:22px; }
+  .breakdown-item .comment{ font-size:13.3px; color:var(--graphite-soft); line-height:1.55; }
+  .strengths-improve{ display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:16px; }
+  .si-box{ padding:13px 15px; border-radius:9px; font-size:13px; line-height:1.6; }
+  .si-box.strength{ background:var(--teal-soft); color:#0f4438; }
+  .si-box.improve{ background:var(--red-pen-soft); color:#6f2119; }
+  .si-box .lbl{ font-family:'IBM Plex Mono',monospace; font-size:10px; letter-spacing:0.1em; text-transform:uppercase; margin-bottom:5px; opacity:0.75;}
+
+  .error-banner{
+    background:#fdeceb; border:1px solid #f0b8b2; color:#8a2b21;
+    padding:11px 15px; border-radius:9px; font-size:13px; margin-top:12px; line-height:1.55;
+  }
+
+  @media (max-width: 860px){
+    .app{ grid-template-columns: 1fr; }
+    .sidebar{ position:static; height:auto; border-right:none; border-bottom:1px solid rgba(255,255,255,0.08); }
+    .topic-list{ display:none; }
+    .mobile-topics{ display:flex; gap:6px; overflow-x:auto; padding-bottom:4px; margin:-2px 0 4px; }
+    .mobile-topics .pill{ flex-shrink:0; }
+    .main{ padding:26px 18px 60px; }
+    .paper-card, .panel, .empty-card{ padding:22px 20px; }
+    .strengths-improve{ grid-template-columns:1fr; }
+  }
+  .app{ display:none; }
+
+  .access-gate{
+    display:none;
+    position:fixed; inset:0; z-index:100;
+    align-items:center; justify-content:center;
+    padding:20px;
+    background:
+      repeating-linear-gradient(0deg, rgba(255,255,255,0.028) 0px, rgba(255,255,255,0.028) 1px, transparent 1px, transparent 34px),
+      repeating-linear-gradient(90deg, rgba(255,255,255,0.028) 0px, rgba(255,255,255,0.028) 1px, transparent 1px, transparent 34px),
+      var(--ink);
+  }
+  .access-card{
+    background:var(--paper); color:var(--graphite);
+    border-radius:14px; padding:36px 34px;
+    max-width:380px; width:100%;
+    box-shadow: 0 30px 60px -30px rgba(0,0,0,0.55);
+    position:relative; overflow:hidden;
+  }
+  .access-card::before{ content:""; position:absolute; left:0; top:0; bottom:0; width:5px; background:var(--red-pen); }
+  .access-card h2{ font-family:'Newsreader', serif; font-weight:600; font-size:21px; margin:6px 0 10px; }
+  .access-card p{ font-size:13.5px; color:var(--graphite-soft); line-height:1.6; margin:0 0 18px; }
+  .access-card input{
+    width:100%; font-family:'IBM Plex Mono', monospace; font-size:14px;
+    padding:11px 13px; border-radius:9px; border:1.4px solid var(--paper-line);
+    margin-bottom:12px; background:#fff;
+  }
+  .access-card input:focus{ outline:none; border-color:var(--red-pen); }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation-duration:0.001ms !important; transition-duration:0.001ms !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="access-gate" id="accessGate">
+  <div class="access-card">
+    <div class="q-eyebrow">Spesh Bank</div>
+    <h2>Enter your access code</h2>
+    <p>Ask whoever set this up for the code — it's checked every time the app talks to Claude.</p>
+    <input type="password" id="accessCodeInput" placeholder="Access code" autocomplete="off" />
+    <button class="generate-btn" id="accessCodeSubmit" style="width:100%;">Continue</button>
+    <div class="error-banner" id="accessCodeError" style="display:none; margin-top:12px;"></div>
+  </div>
+</div>
+
+<div class="app">
+  <!-- ============ SIDEBAR ============ -->
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="brand-mark">SPESH BANK<span class="dot">.</span></div>
+      <div class="brand-tag">Specialist Mathematics practice, generated on demand — questions, worked solutions and a red pen for your working.</div>
+    </div>
+
+    <div>
+      <div class="side-label">Topic</div>
+      <div class="topic-list" id="topicList"></div>
+    </div>
+
+    <div>
+      <div class="side-label">Format</div>
+      <div class="pillrow" id="formatRow"></div>
+    </div>
+
+    <div>
+      <div class="side-label">Difficulty</div>
+      <div class="pillrow" id="difficultyRow"></div>
+    </div>
+
+    <button class="generate-btn" id="generateBtn">Generate question</button>
+
+    <hr>
+
+    <div style="flex:1; min-height:0; display:flex; flex-direction:column;">
+      <div class="side-label">Recent</div>
+      <div class="history-list" id="historyList"><div class="history-empty">Nothing yet — generate your first question.</div></div>
+    </div>
+
+    <div class="sidebar-foot">Questions and marking are written by Claude in the VCAA Specialist Maths style. They're original, not official VCAA material — always sanity-check against your notes and CAS.<br><a href="#" id="resetCodeLink" style="color:#9fb0c9;">Change access code</a></div>
+  </aside>
+
+  <!-- ============ MAIN ============ -->
+  <main class="main">
+    <div class="topbar">
+      <div class="crumb">Topic → <b id="crumbTopic">Integration</b> &nbsp;·&nbsp; <span id="crumbFormat">Short answer</span> &nbsp;·&nbsp; <span id="crumbDiff">Standard</span></div>
+    </div>
+
+    <div class="mobile-topics" id="mobileTopics"></div>
+
+    <div id="mainContent">
+      <div class="empty-card" id="emptyState">
+        <div class="glyph-big">∫</div>
+        <h2>No question on the desk yet</h2>
+        <p>Pick a topic on the left, choose a format and difficulty, then hit <b>Generate question</b>. You'll get a fresh VCE-style problem, a full worked solution on demand, and you can photograph your own working to get it marked.</p>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script>
+/* ===================== DATA ===================== */
+const TOPICS = [
+  { name:"Proofs", glyph:"⊢" },
+  { name:"Complex Numbers", glyph:"i" },
+  { name:"Basic Vectors", glyph:"v⃗" },
+  { name:"Vector Planes", glyph:"Π" },
+  { name:"Vector Calculus", glyph:"r⃗(t)" },
+  { name:"Integration", glyph:"∫" },
+  { name:"Differentiation", glyph:"f′" },
+  { name:"Differential Equations", glyph:"dy⁄dx" },
+  { name:"Kinematics", glyph:"x(t)" },
+  { name:"Probability", glyph:"P(A)" },
+];
+
+const TOPIC_GUIDE = {
+  "Proofs": "Discrete mathematics / proof techniques: direct proof, proof by contrapositive, proof by contradiction, and mathematical induction (including divisibility results and inequalities). Also disproof by counter-example, proofs involving parity (odd/even) and irrational numbers, simple number-theory results (e.g. divisibility by 9, digit sums), and correct use of logical notation and quantifiers (for all / there exists, implies, contrapositive) especially in multiple-choice items.",
+  "Complex Numbers": "Cartesian and polar (modulus-argument / cis) forms, arithmetic with complex numbers, conjugates, De Moivre's theorem, solving polynomial equations over the complex numbers with real coefficients (conjugate root theorem), factorising cubics/quartics, roots of unity and other complex roots expressed in polar form, and loci/regions in the Argand plane such as |z-a|=r, |z-a|=|z-b|, Arg(z-a)=θ, including sketching, intersections and segment/sector areas.",
+  "Basic Vectors": "Vector operations in two and three dimensions: magnitude, unit vectors, the scalar (dot) product and angle between vectors, scalar and vector resolutes, using vectors to prove geometric results (right angles, collinearity, parallelogram/rhombus properties), linear dependence and independence, and the vector (cross) product for finding a perpendicular vector or an area.",
+  "Vector Planes": "Vector and Cartesian equations of lines and planes in three dimensions, finding a normal to a plane via the cross product, intersections of two lines / a line and a plane / two planes, the angle between a line and a plane or between two planes, and the shortest distance from a point to a line or plane, or between two lines.",
+  "Vector Calculus": "Position vectors as functions of time, finding velocity and acceleration vectors by differentiating componentwise, speed as the magnitude of the velocity vector, finding the Cartesian equation of a path from parametric vector components, sketching curves defined by a vector function, and applications such as two objects colliding or their closest approach.",
+  "Integration": "Antidifferentiation techniques including substitution, integration by parts, and partial fractions; evaluating definite integrals; areas between curves; volumes of solids of revolution about the x- or y-axis; and arc length / surface area of revolution for curves given in Cartesian or parametric form.",
+  "Differentiation": "Differentiation of inverse circular (arcsin, arccos, arctan) functions, implicit differentiation, related rates, the chain/product/quotient rules, second derivatives, locating and classifying stationary points and points of inflection, and finding equations of tangents and normals to a curve.",
+  "Differential Equations": "First-order separable differential equations, verifying a given solution by substitution, slope (direction) fields, Euler's method for numerical approximation of a solution, and applied contexts such as mixing/salt-tank problems, Newton's law of cooling, and logistic growth.",
+  "Kinematics": "Rectilinear motion analysed with calculus: the relationships a = dv/dt = v(dv/dx) between displacement, velocity and acceleration, constant-acceleration ('suvat') formulas, motion under gravity, and problems requiring interpretation of a velocity–time graph or solving a differential equation for straight-line motion.",
+  "Probability": "Continuous random variables with a focus on the normal distribution, the distribution of sample means and the Central Limit Theorem, confidence intervals for a population mean, and hypothesis testing (one- and two-tailed z-tests) including p-values, Type I / Type II errors and levels of significance."
+};
+
+const FORMATS = [
+  { key:"mc", label:"Multiple choice" },
+  { key:"sa", label:"Short answer" },
+  { key:"er", label:"Extended response" },
+];
+const DIFFICULTIES = [
+  { key:"standard", label:"Standard" },
+  { key:"challenging", label:"Challenging" },
+];
+
+const KATEX_OPTS = {
+  delimiters: [
+    {left:"$$", right:"$$", display:true},
+    {left:"\\[", right:"\\]", display:true},
+    {left:"$", right:"$", display:false},
+    {left:"\\(", right:"\\)", display:false},
+  ],
+  throwOnError:false
+};
+
+/* ===================== STATE ===================== */
+let state = {
+  topic: "Integration",
+  format: "sa",
+  difficulty: "standard",
+  question: null,   // parsed question JSON
+  solution: null,   // parsed solution JSON
+  markingFile: null,
+  markingResult: null,
+};
+let history = [];
+
+/* ===================== STORAGE ===================== */
+function loadHistory(){
+  try{
+    const raw = localStorage.getItem('spesh-history');
+    history = raw ? JSON.parse(raw) : [];
+  }catch(e){ history = []; }
+  renderHistory();
+}
+function saveHistory(){
+  try{ localStorage.setItem('spesh-history', JSON.stringify(history.slice(0,30))); }catch(e){}
+}
+function pushHistory(entry){
+  history.unshift(entry);
+  history = history.slice(0,30);
+  saveHistory();
+  renderHistory();
+}
+function saveFullRecord(id, record){
+  try{ localStorage.setItem('spesh-q-'+id, JSON.stringify(record)); }
+  catch(e){
+    // localStorage is full — drop the oldest saved question and retry once
+    try{
+      const oldest = history[history.length-1];
+      if(oldest){ localStorage.removeItem('spesh-q-'+oldest.id); history.pop(); saveHistory(); }
+      localStorage.setItem('spesh-q-'+id, JSON.stringify(record));
+    }catch(e2){}
+  }
+}
+function loadFullRecord(id){
+  try{
+    const raw = localStorage.getItem('spesh-q-'+id);
+    return raw ? JSON.parse(raw) : null;
+  }catch(e){ return null; }
+}
+
+/* ===================== UTIL ===================== */
+function escapeHtml(str){
+  return (str||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+function mathHtml(str){
+  if(!str) return '';
+  const esc = escapeHtml(str);
+  const paras = esc.split(/\n\s*\n/).map(p => `<p>${p.replace(/\n/g,'<br>')}</p>`).join('');
+  return paras;
+}
+function renderMath(el){
+  if(window.renderMathInElement) renderMathInElement(el, KATEX_OPTS);
+}
+function uid(){ return Date.now().toString(36) + Math.random().toString(36).slice(2,7); }
+
+function repairJsonString(t){
+  // Fix stray single backslashes that break JSON.parse (common with LaTeX output)
+  return t.replace(/\\(?!["\\\/bfnrtu])/g, '\\\\');
+}
+function extractJson(text){
+  let t = text.trim();
+  t = t.replace(/^```json/i,'').replace(/^```/,'').replace(/```$/,'').trim();
+  const start = t.indexOf('{');
+  const end = t.lastIndexOf('}');
+  if(start !== -1 && end !== -1) t = t.slice(start, end+1);
+  try{ return JSON.parse(t); }
+  catch(e){
+    try{ return JSON.parse(repairJsonString(t)); }
+    catch(e2){ throw new Error("Couldn't parse the response as JSON."); }
+  }
+}
+
+/* ===================== CLAUDE CALL ===================== */
+async function callClaude(content, maxTokens=1200){
+  const code = localStorage.getItem('spesh-access-code') || '';
+  const response = await fetch("/api/claude", {
+    method: "POST",
+    headers: { "Content-Type": "application/json", "x-app-code": code },
+    body: JSON.stringify({
+      max_tokens: maxTokens,
+      messages: [ { role: "user", content } ]
+    })
+  });
+  if(response.status === 401){
+    throw new Error("Access code missing or incorrect — use \u201cChange access code\u201d in the sidebar and try again.");
+  }
+  if(!response.ok){
+    let msg = "Request failed (" + response.status + "). Please try again.";
+    try{ const errData = await response.json(); if(errData && errData.error) msg = errData.error; }catch(e){}
+    throw new Error(msg);
+  }
+  const data = await response.json();
+  const text = (data.content || [])
+    .filter(b => b.type === "text")
+    .map(b => b.text)
+    .join("\n");
+  if(!text) throw new Error("No response came back — please try again.");
+  return text;
+}
+
+/* ===================== PROMPTS ===================== */
+const HOUSE_STYLE = `You are an expert VCE Specialist Mathematics (Units 3 & 4, Victoria, Australia) exam-question writer. Write an ORIGINAL question in authentic VCAA exam style — never copy or lightly reword a real past VCAA question.
+
+House style rules:
+- All mathematics must be valid LaTeX. Wrap inline maths in single dollar signs, e.g. $x^2+1$, and any standalone/multi-line working in double dollar signs, e.g. $$\\int x\\,dx$$.
+- Vectors: write as \\vec{r}, \\vec{v}, \\vec{a}, and unit vectors as \\hat{\\imath}, \\hat{\\jmath}, \\hat{k}.
+- Complex numbers: use i for the imaginary unit, \\text{cis}(\\theta) for r\\,\\text{cis}(\\theta) polar form, and \\operatorname{Arg}(z) for the principal argument.
+- Use VCAA command terms precisely: "Show that", "Hence", "Hence, or otherwise,", "Verify that", "Prove by mathematical induction that", "Find, correct to two decimal places,", "Sketch the graph of ... labelling ... with their coordinates", "Give your answer in the form ...".
+- State a realistic mark allocation for every part.
+- Never claim or imply this is a real VCAA exam paper.`;
+
+function formatSpec(format){
+  if(format === "mc") return `Produce ONE multiple-choice question worth 1 mark, with exactly five options labelled A–E and only one correct. The distractors must reflect genuine, plausible student errors (sign slips, missed cases, wrong formula) — not obviously wrong options.`;
+  if(format === "er") return `Produce ONE extended-response question with 4 to 7 parts (label them a., b., c., ... and use sub-parts i., ii. if natural), totalling between 8 and 14 marks. It may build a short applied scenario across the parts (e.g. a motion, growth, or geometric context), with later parts depending on earlier results.`;
+  return `Produce ONE short-answer question with 2 to 4 parts (label them a., b., c., ...), each with its own stated mark value, totalling between 3 and 8 marks.`;
+}
+function difficultySpec(diff){
+  if(diff === "challenging") return `Calibrate this to the hardest questions on a VCAA paper, or a demanding extra practice question: multi-step reasoning, less scaffolding, and it may combine two sub-skills from within the topic.`;
+  return `Calibrate this to typical mid-paper VCAA difficulty — the kind of question a well-prepared student should be able to access with solid technique.`;
+}
+
+function buildGenerationPrompt(topic, format, difficulty){
+  return `${HOUSE_STYLE}
+
+Topic: ${topic}
+Topic content to draw on: ${TOPIC_GUIDE[topic]}
+
+${formatSpec(format)}
+${difficultySpec(difficulty)}
+
+Keep the whole question under 280 words.
+
+Respond with ONLY a single valid JSON object — no markdown code fences, no commentary before or after — with exactly this shape:
+{
+  "title": "short descriptive title (max 8 words)",
+  "marks": <integer, total marks for the whole question>,
+  "stem": "<shared introductory context/setup text, using $...$ for inline maths and $$...$$ for display maths; empty string \\"\\" if there is no shared stem>",
+  "parts": [ {"label": "a.", "prompt": "<question text with inline maths>", "marks": <integer>} ],
+  "options": ["A. ...","B. ...","C. ...","D. ...","E. ..."]
+}
+Rules for the JSON:
+- For multiple-choice, "parts" must contain exactly one entry with "label": "" holding the full question text, "marks": 1, and "options" populated with five entries.
+- For short-answer / extended-response, "options" must be an empty array [].
+- Every backslash used for LaTeX must be a valid JSON escape, e.g. write "\\\\frac{1}{2}" and "\\\\vec{r}" (double backslash) so the JSON parses correctly.`;
+}
+
+function buildSolutionPrompt(question){
+  return `${HOUSE_STYLE}
+
+You previously wrote this VCE Specialist Mathematics question (as JSON):
+${JSON.stringify(question)}
+
+Now write the full worked solution and an examiner's commentary for it, in the same LaTeX style ($...$ inline, $$...$$ for display working). Keep the entire response under 550 words total.
+
+Respond with ONLY a single valid JSON object — no markdown fences, no commentary before or after:
+{
+  "solution": "<full worked solution, structured by part label where relevant, showing method clearly but concisely>",
+  "finalAnswer": "<short line summarising the final answer(s), e.g. 'a. x = 2   b. 14.7 cm/s'>",
+  "examinerInsight": "<2-4 sentences written in the voice of a VCAA examiner's report: the common errors students make on this style of question, and what separates a full-mark response from a partial one>",
+  "markingNotes": "<one short sentence on how method vs accuracy marks are typically split per part>"
+}
+Escape every LaTeX backslash correctly for JSON (double backslash), e.g. "\\\\int".`;
+}
+
+function buildMarkingPrompt(question, solution){
+  return `${HOUSE_STYLE}
+
+You are an experienced VCE Specialist Mathematics examiner marking a student's handwritten working, shown in the attached photo, against the following question.
+
+Question (JSON): ${JSON.stringify(question)}
+${solution ? "Correct worked solution for reference (JSON): " + JSON.stringify(solution) : "No reference solution was pre-generated — work out the correct method and answer yourself before marking."}
+
+Mark strictly but fairly, VCAA-style (method marks and accuracy marks), reading the handwriting as carefully as you can. If part of the handwriting is illegible, say so in that part's comment and award 0 for the illegible portion rather than guessing generously. If the photo shows working for only some parts, mark only what is shown and note any missing parts as 0.
+
+Apply VCAA-style rigour on these commonly-missed deduction points, even when the overall method and final numeric answer are correct — do not let these slide:
+- Missing differential notation: if an integral is written or evaluated at any stage without its differential (e.g. a missing $dx$, $dy$, $dt$ or $d\\\\theta$), deduct an accuracy mark for that step and explicitly name it in the comment (e.g. "method and value correct, but $dx$ was dropped from the integral — accuracy mark lost for incomplete notation").
+- Missing or wrong units: if the question's context calls for a unit (e.g. metres, seconds, $\\\\text{m s}^{-1}$, $\\\\text{cm}^2$) and the final answer for that part omits the unit or gives the wrong one, deduct an accuracy mark and say so explicitly in the comment.
+Both of these must be checked for every part, and if either causes a deduction, name it plainly rather than folding it into a vague general comment.
+
+FORMATTING IS CRITICAL: every text field below is passed through a maths typesetter that ONLY renders text wrapped in dollar signs — anything left bare is shown as ugly plain text. So ANY maths at all, even a single variable, a fraction, or a short expression like x, dy/dx, or 2x+1, MUST be wrapped in $...$. Never write bare LaTeX or bare maths outside dollar signs. For example, a comment should look exactly like this:
+"Good use of the chain rule, but $\\\\dfrac{d}{dx}\\\\big(\\\\arcsin(2x)\\\\big)$ should simplify to $\\\\dfrac{2}{\\\\sqrt{1-4x^2}}$, not $\\\\dfrac{1}{\\\\sqrt{1-4x^2}}$."
+Escape every LaTeX backslash correctly for JSON (double backslash), e.g. "\\\\vec{r}", "\\\\dfrac{1}{2}".
+
+Keep the whole response under 350 words.
+
+Respond with ONLY a single valid JSON object — no markdown fences, no commentary before or after:
+{
+  "marksAwarded": <integer>,
+  "marksTotal": <integer, must equal the question's total marks>,
+  "breakdown": [ {"part": "a.", "awarded": <integer>, "total": <integer>, "comment": "<short, specific comment; wrap ANY maths in $...$>"} ],
+  "feedback": "<2-3 sentences of honest overall feedback in an examiner's tone; wrap ANY maths in $...$>",
+  "strengths": "<one short sentence; wrap ANY maths in $...$>",
+  "improvements": "<one short sentence; wrap ANY maths in $...$>"
+}`;
+}
+
+/* ===================== RENDERING ===================== */
+function renderSidebarLists(){
+  const topicList = document.getElementById('topicList');
+  const mobileTopics = document.getElementById('mobileTopics');
+  topicList.innerHTML = '';
+  mobileTopics.innerHTML = '';
+  TOPICS.forEach(t => {
+    const btn = document.createElement('button');
+    btn.className = 'topic-btn' + (t.name === state.topic ? ' active' : '');
+    btn.innerHTML = `<span class="glyph">${t.glyph}</span><span>${t.name}</span>`;
+    btn.onclick = () => { state.topic = t.name; refreshControls(); };
+    topicList.appendChild(btn);
+
+    const pill = document.createElement('button');
+    pill.className = 'pill' + (t.name === state.topic ? ' active' : '');
+    pill.textContent = t.name;
+    pill.onclick = () => { state.topic = t.name; refreshControls(); };
+    mobileTopics.appendChild(pill);
+  });
+
+  const formatRow = document.getElementById('formatRow');
+  formatRow.innerHTML = '';
+  FORMATS.forEach(f => {
+    const pill = document.createElement('button');
+    pill.className = 'pill' + (f.key === state.format ? ' active' : '');
+    pill.textContent = f.label;
+    pill.onclick = () => { state.format = f.key; refreshControls(); };
+    formatRow.appendChild(pill);
+  });
+
+  const diffRow = document.getElementById('difficultyRow');
+  diffRow.innerHTML = '';
+  DIFFICULTIES.forEach(d => {
+    const pill = document.createElement('button');
+    pill.className = 'pill' + (d.key === state.difficulty ? ' active' : '');
+    pill.textContent = d.label;
+    pill.onclick = () => { state.difficulty = d.key; refreshControls(); };
+    diffRow.appendChild(pill);
+  });
+}
+function refreshControls(){
+  renderSidebarLists();
+  document.getElementById('crumbTopic').textContent = state.topic;
+  document.getElementById('crumbFormat').textContent = FORMATS.find(f=>f.key===state.format).label;
+  document.getElementById('crumbDiff').textContent = DIFFICULTIES.find(d=>d.key===state.difficulty).label;
+}
+
+function renderHistory(){
+  const list = document.getElementById('historyList');
+  if(!history.length){
+    list.innerHTML = '<div class="history-empty">Nothing yet — generate your first question.</div>';
+    return;
+  }
+  list.innerHTML = '';
+  history.forEach(h => {
+    const btn = document.createElement('button');
+    btn.className = 'history-item';
+    btn.innerHTML = `<span class="h-topic">${escapeHtml(h.topic)} · ${h.marks} marks</span><span class="h-title">${escapeHtml(h.title)}</span>`;
+    btn.onclick = () => loadFromHistory(h.id);
+    list.appendChild(btn);
+  });
+}
+
+async function loadFromHistory(id){
+  const rec = await loadFullRecord(id);
+  if(!rec) return;
+  state.topic = rec.topic;
+  state.format = rec.format;
+  state.difficulty = rec.difficulty;
+  state.question = rec.question;
+  state.solution = rec.solution || null;
+  state.markingResult = null;
+  state.markingFile = null;
+  refreshControls();
+  renderQuestion(rec.id);
+}
+
+/* ---- Main content renderers ---- */
+function renderQuestion(recordId){
+  const q = state.question;
+  const main = document.getElementById('mainContent');
+  const isMC = state.format === 'mc';
+
+  let partsHtml = '';
+  if(isMC){
+    const part = q.parts[0] || {prompt:'', marks:1};
+    partsHtml = `<div class="q-stem" data-math="1">${mathHtml(part.prompt)}</div>
+      <ul class="q-options">${(q.options||[]).map(o=>`<li data-math="1">${mathHtml(o)}</li>`).join('')}</ul>`;
+  } else {
+    partsHtml = `<ol class="q-parts">` + (q.parts||[]).map(p => `
+      <li class="q-part">
+        <span class="p-label">${escapeHtml(p.label||'')}</span>
+        <div class="p-body">
+          <div class="p-prompt" data-math="1">${mathHtml(p.prompt)}</div>
+          <div class="p-marks">[${p.marks} mark${p.marks===1?'':'s'}]</div>
+        </div>
+      </li>`).join('') + `</ol>`;
+  }
+
+  main.innerHTML = `
+    <div class="paper-card">
+      <div class="q-head">
+        <div>
+          <div class="q-eyebrow">${escapeHtml(state.topic)} · ${FORMATS.find(f=>f.key===state.format).label} · ${DIFFICULTIES.find(d=>d.key===state.difficulty).label}</div>
+          <div class="q-title">${escapeHtml(q.title)}</div>
+        </div>
+        <div class="marks-chip">${q.marks} mark${q.marks===1?'':'s'}</div>
+      </div>
+      ${ q.stem ? `<div class="q-stem" data-math="1">${mathHtml(q.stem)}</div>` : '' }
+      ${partsHtml}
+    </div>
+
+    <div class="action-row">
+      <button class="action-btn solution" id="solutionBtn">Reveal worked solution</button>
+      <button class="action-btn mark" id="markBtn">Mark my working</button>
+    </div>
+
+    <div id="solutionPanel"></div>
+    <div id="markingPanel"></div>
+  `;
+  renderMath(main);
+
+  document.getElementById('solutionBtn').onclick = () => toggleSolution(recordId);
+  document.getElementById('markBtn').onclick = () => toggleMarking();
+}
+
+async function toggleSolution(recordId){
+  const panel = document.getElementById('solutionPanel');
+  if(panel.dataset.open === '1'){
+    panel.innerHTML = '';
+    panel.dataset.open = '0';
+    return;
+  }
+  panel.dataset.open = '1';
+
+  if(state.solution){
+    renderSolutionPanel(panel, state.solution);
+    return;
+  }
+
+  panel.innerHTML = `<div class="panel"><div class="loader"><span class="spinner"></span> Working through the solution…</div></div>`;
+  try{
+    const raw = await callClaude(buildSolutionPrompt(state.question), 1000);
+    const sol = extractJson(raw);
+    state.solution = sol;
+    if(recordId){
+      const rec = await loadFullRecord(recordId);
+      if(rec){ rec.solution = sol; await saveFullRecord(recordId, rec); }
+    }
+    renderSolutionPanel(panel, sol);
+  }catch(err){
+    panel.innerHTML = `<div class="panel"><div class="error-banner">Couldn't generate the solution — ${escapeHtml(err.message)} <br><br>
+      <button class="action-btn solution" style="margin-top:6px;" onclick="document.getElementById('solutionPanel').dataset.open='0'; toggleSolution('${recordId||''}')">Try again</button>
+    </div></div>`;
+  }
+}
+
+function renderSolutionPanel(panel, sol){
+  panel.innerHTML = `
+    <div class="panel">
+      <div class="panel-head"><span class="tag">Worked solution</span><h3>Full method</h3></div>
+      <div class="sol-block" data-math="1">${mathHtml(sol.solution)}</div>
+      ${sol.finalAnswer ? `<div class="final-answer" data-math="1"><b>Final answer —</b> ${mathHtml(sol.finalAnswer)}</div>` : ''}
+      <div class="insight-box">
+        <div class="lbl">Examiner's insight</div>
+        <p data-math="1">${mathHtml(sol.examinerInsight||'')}</p>
+      </div>
+      ${sol.markingNotes ? `<div class="marking-notes" data-math="1">${mathHtml(sol.markingNotes)}</div>` : ''}
+    </div>
+  `;
+  renderMath(panel);
+}
+
+function toggleMarking(){
+  const panel = document.getElementById('markingPanel');
+  if(panel.dataset.open === '1'){
+    panel.innerHTML = '';
+    panel.dataset.open = '0';
+    return;
+  }
+  panel.dataset.open = '1';
+  renderMarkingUpload(panel);
+}
+
+function renderMarkingUpload(panel){
+  panel.innerHTML = `
+    <div class="panel">
+      <div class="panel-head"><span class="tag" style="color:var(--red-pen); background:var(--red-pen-soft);">Mark my working</span><h3>Upload a photo of your working</h3></div>
+      <label class="dropzone" id="dropzone">
+        <input type="file" id="fileInput" accept="image/*" />
+        <div class="dz-label"><b>Click to choose a photo</b><br>or drag one in here — JPG or PNG of your handwritten working</div>
+      </label>
+      <div id="previewArea"></div>
+      <div class="mark-submit-row">
+        <button class="action-btn mark" id="submitMarkBtn" disabled>Mark this</button>
+      </div>
+      <div id="markingResultArea"></div>
+    </div>
+  `;
+
+  const dz = document.getElementById('dropzone');
+  const fileInput = document.getElementById('fileInput');
+  const submitBtn = document.getElementById('submitMarkBtn');
+
+  fileInput.addEventListener('change', () => {
+    const file = fileInput.files[0];
+    if(!file) return;
+    state.markingFile = file;
+    dz.classList.add('has-file');
+    const url = URL.createObjectURL(file);
+    document.getElementById('previewArea').innerHTML = `
+      <div class="preview-wrap"><img src="${url}" alt="Preview of uploaded working" /><span style="font-size:12.5px; color:var(--graphite-soft);">${escapeHtml(file.name)}</span></div>
+    `;
+    submitBtn.disabled = false;
+  });
+
+  ['dragover','dragenter'].forEach(evt => dz.addEventListener(evt, e => { e.preventDefault(); }));
+  dz.addEventListener('drop', e => {
+    e.preventDefault();
+    const file = e.dataTransfer.files[0];
+    if(file){ fileInput.files = e.dataTransfer.files; fileInput.dispatchEvent(new Event('change')); }
+  });
+
+  submitBtn.onclick = submitMarking;
+}
+
+async function submitMarking(){
+  const resultArea = document.getElementById('markingResultArea');
+  const submitBtn = document.getElementById('submitMarkBtn');
+  if(!state.markingFile) return;
+  submitBtn.disabled = true;
+  submitBtn.textContent = 'Marking…';
+  resultArea.innerHTML = `<div class="loader" style="margin-top:14px;"><span class="spinner"></span> Reading your working and checking it against the solution…</div>`;
+
+  try{
+    const base64 = await fileToCompressedBase64(state.markingFile);
+    const content = [
+      { type:"image", source:{ type:"base64", media_type: "image/jpeg", data: base64 } },
+      { type:"text", text: buildMarkingPrompt(state.question, state.solution) }
+    ];
+    const raw = await callClaude(content, 1100);
+    const result = extractJson(raw);
+    state.markingResult = result;
+    renderMarkingResult(resultArea, result);
+  }catch(err){
+    resultArea.innerHTML = `<div class="error-banner">Couldn't mark that photo — ${escapeHtml(err.message)}</div>`;
+  }finally{
+    submitBtn.disabled = false;
+    submitBtn.textContent = 'Mark this';
+  }
+}
+
+// Downscales/re-encodes the photo before it ever leaves the browser — keeps the
+// request payload small and keeps vision costs predictable regardless of how
+// large the original phone photo is.
+function fileToCompressedBase64(file, maxDim=1600, quality=0.82){
+  return new Promise((resolve, reject) => {
+    const url = URL.createObjectURL(file);
+    const img = new Image();
+    img.onload = () => {
+      let { width, height } = img;
+      if(width > maxDim || height > maxDim){
+        const scale = maxDim / Math.max(width, height);
+        width = Math.round(width * scale);
+        height = Math.round(height * scale);
+      }
+      const canvas = document.createElement('canvas');
+      canvas.width = width; canvas.height = height;
+      const ctx = canvas.getContext('2d');
+      ctx.fillStyle = '#ffffff';
+      ctx.fillRect(0, 0, width, height);
+      ctx.drawImage(img, 0, 0, width, height);
+      URL.revokeObjectURL(url);
+      const dataUrl = canvas.toDataURL('image/jpeg', quality);
+      resolve(dataUrl.split(',')[1]);
+    };
+    img.onerror = () => { URL.revokeObjectURL(url); reject(new Error("Couldn't read that image file.")); };
+    img.src = url;
+  });
+}
+
+function renderMarkingResult(el, r){
+  el.innerHTML = `
+    <div class="result-top" style="margin-top:20px;">
+      <div class="score-circle">${r.marksAwarded}⁄${r.marksTotal}</div>
+      <div class="result-feedback" data-math="1">${mathHtml(r.feedback||'')}</div>
+    </div>
+    <ul class="breakdown-list">
+      ${(r.breakdown||[]).map(b => `
+        <li class="breakdown-item">
+          <span class="part-tag">${escapeHtml(b.part||'')}</span>
+          <span class="mark-tag">${b.awarded}⁄${b.total}</span>
+          <span class="comment" data-math="1">${mathHtml(b.comment||'')}</span>
+        </li>`).join('')}
+    </ul>
+    <div class="strengths-improve">
+      <div class="si-box strength"><div class="lbl">Strength</div><span data-math="1">${mathHtml(r.strengths||'')}</span></div>
+      <div class="si-box improve"><div class="lbl">Focus on next</div><span data-math="1">${mathHtml(r.improvements||'')}</span></div>
+    </div>
+  `;
+  renderMath(el);
+}
+
+/* ===================== GENERATE ===================== */
+async function generateQuestion(){
+  const btn = document.getElementById('generateBtn');
+  btn.disabled = true;
+  btn.textContent = 'Writing question…';
+
+  const main = document.getElementById('mainContent');
+  main.innerHTML = `<div class="paper-card"><div class="loader"><span class="spinner"></span> Drafting a ${DIFFICULTIES.find(d=>d.key===state.difficulty).label.toLowerCase()} ${state.topic.toLowerCase()} question…</div></div>`;
+
+  try{
+    const raw = await callClaude(buildGenerationPrompt(state.topic, state.format, state.difficulty), 1000);
+    const q = extractJson(raw);
+    state.question = q;
+    state.solution = null;
+    state.markingResult = null;
+    state.markingFile = null;
+
+    const id = uid();
+    const record = { id, topic: state.topic, format: state.format, difficulty: state.difficulty, question: q, solution: null };
+    await saveFullRecord(id, record);
+    await pushHistory({ id, topic: state.topic, title: q.title, marks: q.marks });
+
+    renderQuestion(id);
+  }catch(err){
+    main.innerHTML = `<div class="paper-card"><div class="error-banner">Couldn't generate a question — ${escapeHtml(err.message)}</div></div>`;
+  }finally{
+    btn.disabled = false;
+    btn.textContent = 'Generate question';
+  }
+}
+
+/* ===================== ACCESS GATE ===================== */
+function showAccessGate(){
+  document.getElementById('accessGate').style.display = 'flex';
+  document.querySelector('.app').style.display = 'none';
+}
+function hideAccessGate(){
+  document.getElementById('accessGate').style.display = 'none';
+  document.querySelector('.app').style.display = 'grid';
+}
+function submitAccessCode(){
+  const input = document.getElementById('accessCodeInput');
+  const val = input.value.trim();
+  const errEl = document.getElementById('accessCodeError');
+  if(!val){
+    errEl.textContent = 'Enter the code first.';
+    errEl.style.display = 'block';
+    return;
+  }
+  localStorage.setItem('spesh-access-code', val);
+  errEl.style.display = 'none';
+  hideAccessGate();
+}
+document.getElementById('accessCodeSubmit').addEventListener('click', submitAccessCode);
+document.getElementById('accessCodeInput').addEventListener('keydown', e => { if(e.key === 'Enter') submitAccessCode(); });
+document.getElementById('resetCodeLink').addEventListener('click', e => {
+  e.preventDefault();
+  localStorage.removeItem('spesh-access-code');
+  document.getElementById('accessCodeInput').value = '';
+  showAccessGate();
+});
+
+/* ===================== INIT ===================== */
+document.getElementById('generateBtn').addEventListener('click', generateQuestion);
+refreshControls();
+loadHistory();
+if(localStorage.getItem('spesh-access-code')){ hideAccessGate(); } else { showAccessGate(); }
+</script>
+</body>
+</html>
